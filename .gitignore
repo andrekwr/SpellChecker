@@ -128,4 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-*.jsonln
+dump_small_clean.jsonln
