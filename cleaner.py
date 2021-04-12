@@ -1,7 +1,7 @@
 import json
 import re
 
-
+#Remove URLs
 ## Functions to clean wikipedia's text.
 def removeUrl(texto):
     # https://www.geeksforgeeks.org/python-check-url-string/
@@ -51,50 +51,50 @@ def removeUrl(texto):
     matcher = re.compile(pattern, re.VERBOSE)
     return matcher.sub(repl, texto)
 
-
+#Remove Wikipedia hyperlinks
 def removeWikipediaLinks(text):
     pattern = r"\[\[(?:[^|]*?\|)*?([^|]*?)\]\]"
     repl = r"\1"
     matcher = re.compile(pattern)
     return matcher.sub(repl, text)
 
-
+#Remove html tag ref
 def removeRef(text):
     return re.sub(r"<ref(?:.*)?>.*?(?:</ref>)?", "", text)
 
-
+#Remove math tag 
 def removeMath(text):
     return re.sub(r"<math(?:.*)?>.*?(?:</math>)?", "", text)
 
-
+#Remove tags delimited by <> characters
 def removeOtherTags(text):
     return re.sub(r"<.*?>(.*?)<.*?>", r"\1", text)
 
-
+#Remove wikipedia formatting
 def removeHtmlFormat(text):
     return re.sub(r'\w+=".*"', "", text)
 
-
+#Remove wikipedia formatting
 def removeOtherWikiFormat(text):
     return re.sub(r"\w+=.+", " ", text)
 
-
+#Remove quotation mark
 def removeQuotationMark(text):
     pattern = r"""(['"]+)(.*?)\1"""
     matcher = re.compile(pattern)
     return matcher.sub(r"\2", text)
 
-
+#Remove equal symbol
 def removeEqual(text):
     return text.replace("=", " ")
 
-
+#Remove braces
 def removeBraces(text):
     pattern = r"{.*?}"
     matcher = re.compile(pattern)
     return matcher.sub("", text)
 
-
+#Remove brackets
 def removeBrackets(text):
     pattern = r"\[.*?\]"
     matcher = re.compile(pattern)
@@ -102,39 +102,39 @@ def removeBrackets(text):
     text = text.replace("]", "")
     return text.replace("[", "")
 
-
+#Remove formatting <!--
 def removeHtmlComment(texto):
     pattern = r"<!--.*?-->"
     matcher = re.compile(pattern)
     return matcher.sub("", texto)
 
-
+#Remove asterisk
 def removeAsterisk(texto):
     texto = texto.replace("*", "")
     return texto
 
-
+#Remove pixel indicative
 def removePx(text):
     return re.sub(r"(?:\d+x)?\d+px", " ", text)
 
-
+#Remove dash
 def removeDash(text):
     return re.sub(r"\s+[-–]\s+", " ", text)
 
-
+#Remove parentheses
 def removeParentheses(text):
     text = text.replace("(", "")
     return text.replace(")", "")
 
-
+#Remove ordinal indicator
 def removeUpperO(text):  # °
     return text.replace("\u00ba", "")
 
-
+#Remove digits
 def removeDigits(text):
     return re.sub("\d+", "", text)
 
-
+#Remove irrevelent characters
 def removeOtherSymbols(text):
     toRemove = ["|", ",", "\n", "\t", ";"]
     x = text
@@ -142,7 +142,7 @@ def removeOtherSymbols(text):
         x.replace(i, "")
     return x
 
-
+#Remove wikipedia templates: double braces
 def removeWikipediaTemplates(text):
     count = 0
     spans_proibidos = []
@@ -167,7 +167,7 @@ def removeWikipediaTemplates(text):
     clean_text += text[inicio:]
     return clean_text
 
-
+#Remove braces
 def removeRemainingBraces(text):
     text = text.replace("{", "")
     return text.replace("}", "")
